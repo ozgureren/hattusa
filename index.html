@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="tr" class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script>
+      (function () {
+        try {
+          var ownDesc = Object.getOwnPropertyDescriptor(window, 'fetch');
+          var proto = Object.getPrototypeOf(window);
+          var protoDesc = proto ? Object.getOwnPropertyDescriptor(proto, 'fetch') : undefined;
+          var desc = ownDesc || protoDesc;
+          if (desc && !(desc.writable || typeof desc.set === 'function') && (!ownDesc || ownDesc.configurable)) {
+            var overrideFetch = null;
+            var baseGetter =
+              typeof desc.get === 'function'
+                ? function () {
+                    return desc.get.call(window);
+                  }
+                : function () {
+                    return desc.value;
+                  };
+            Object.defineProperty(window, 'fetch', {
+              configurable: true,
+              enumerable: desc.enumerable !== false,
+              get: function () {
+                return overrideFetch !== null ? overrideFetch : baseGetter();
+              },
+              set: function (next) {
+                if (typeof next === 'function') {
+                  overrideFetch = next;
+                }
+              },
+            });
+          }
+        } catch (_) {}
+
+        window.addEventListener(
+          'error',
+          function (event) {
+            var src = String((event && event.filename) || '');
+            var msg = String((event && event.message) || '');
+            if (
+              src.indexOf('chrome-extension://') === 0 ||
+              src.indexOf('moz-extension://') === 0 ||
+              src.indexOf('safari-web-extension://') === 0 ||
+              msg.indexOf('Cannot set property fetch of #<Window>') !== -1
+            ) {
+              event.preventDefault();
+              event.stopImmediatePropagation();
+            }
+          },
+          true
+        );
+      })();
+    </script>
+    <title>Hattuşa — Hitit Başkenti 3D Arazi Dioraması</title>
+    <meta
+      name="description"
+      content="MÖ 13. yüzyıldaki Hitit İmparatorluğu başkenti Hattuşa'nın (Çorum-Boğazkale) müze sergisi kalitesinde, izometrik ortografik 3D arkeolojik arazi ve mimari rekonstrüksiyon dioraması."
+    />
+    <meta property="og:title" content="Hattuşa — Hitit Başkenti 3D Arazi Dioraması" />
+    <meta
+      property="og:description"
+      content="MÖ 13. yüzyıldaki Hitit İmparatorluğu başkenti Hattuşa'nın (Çorum-Boğazkale) müze sergisi kalitesinde, izometrik ortografik 3D arkeolojik arazi ve mimari rekonstrüksiyon dioraması."
+    />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=JetBrains+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body class="bg-[#121110] text-[#ede8df] antialiased selection:bg-[#b8894a]/30 selection:text-[#f7f2e8] overflow-hidden">
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

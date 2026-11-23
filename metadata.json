@@ -1,0 +1,6 @@
+{
+  "name": "Hattuşa — Hitit Başkenti 3D Arazi Dioraması",
+  "description": "MÖ 13. yüzyıldaki Hitit İmparatorluğu başkenti Hattuşa'nın (Çorum-Boğazkale) müze sergisi kalitesinde, izometrik ortografik 3D arkeolojik arazi ve mimari rekonstrüksiyon dioraması.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
